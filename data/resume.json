@@ -1,0 +1,8 @@
+[
+    { "id": "proj-web", "text": "Built React + Node portal serving 2M users; improved Lighthouse perf from 62 → 95." },
+    { "id": "devops",   "text": "Designed AWS CI/CD with GitHub Actions, Docker, and ALB; cut deploy time by 70%." },
+    { "id": "vue-mig",  "text": "Migrated Vue 2 → Vue 3 (Composition API); reduced bundle size by 28%." },
+    { "id": "graphql",  "text": "Shipped GraphQL gateway with persisted queries; dropped p95 latency by 34%." },
+    { "id": "a11y",     "text": "Led accessibility overhaul (WCAG 2.1 AA); increased keyboard coverage to 100%." },
+    { "id": "infra",    "text": "Architected multi-account AWS layout (VPC, ALB, ASG, RDS); 99.95% availability." }
+  ]  
