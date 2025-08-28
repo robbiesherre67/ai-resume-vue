@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref } from "vue";
+
 type Tone = "concise" | "leadership" | "impact";
 
 const job = ref("");
@@ -7,6 +8,9 @@ const tone = ref<Tone>("impact");
 const out = ref("");
 const loading = ref(false);
 const copied = ref(false);
+
+// define tones in script (so we don't need "as Tone" in the template)
+const tones: Tone[] = ["impact", "leadership", "concise"];
 
 async function run() {
   if (!job.value || job.value.trim().length < 50) {
@@ -43,6 +47,7 @@ async function copyResult() {
 
 <template>
   <div class="mx-auto max-w-3xl px-6 py-14">
+    <!-- Header -->
     <div class="text-center mb-8">
       <h1 class="text-4xl font-semibold tracking-tight">AI Résumé Assistant</h1>
       <p class="mt-2 text-slate-600">
@@ -50,6 +55,7 @@ async function copyResult() {
       </p>
     </div>
 
+    <!-- Card -->
     <div class="card p-6 md:p-8">
       <label class="block text-sm font-medium text-slate-700">Job Description</label>
       <textarea
@@ -59,18 +65,19 @@ async function copyResult() {
         class="input mt-2"
       />
 
+      <!-- Tone + Action -->
       <div class="mt-5 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div class="flex items-center gap-2">
           <span class="text-sm font-medium text-slate-700">Tone</span>
           <div class="inline-flex rounded-xl border border-slate-300/80 bg-white p-1">
             <button
-              v-for="t in ['impact','leadership','concise']"
+              v-for="t in tones"
               :key="t"
-              @click="tone = t as Tone"
+              @click="tone = t"
               class="px-3 py-1.5 text-sm rounded-lg transition"
-              :class="tone === (t as Tone) ? 'bg-slate-900 text-white' : 'text-slate-700 hover:bg-slate-100'"
+              :class="tone === t ? 'bg-slate-900 text-white' : 'text-slate-700 hover:bg-slate-100'"
             >
-              {{ (t as string).charAt(0).toUpperCase() + (t as string).slice(1) }}
+              {{ t.charAt(0).toUpperCase() + t.slice(1) }}
             </button>
           </div>
         </div>
@@ -87,6 +94,7 @@ async function copyResult() {
         </button>
       </div>
 
+      <!-- Result -->
       <div class="mt-6">
         <div class="flex items-center justify-between">
           <h2 class="text-base font-semibold text-slate-900">Result</h2>
@@ -102,8 +110,10 @@ async function copyResult() {
 
         <div class="mt-3 rounded-xl border border-slate-200/80 bg-white p-4">
           <article class="prose-wrap">
-            <span v-if="out; else placeholder">{{ out }}</span>
-            <template #placeholder>
+            <template v-if="out">
+              {{ out }}
+            </template>
+            <template v-else>
               <span class="text-slate-400">Your tailored bullets will appear here…</span>
             </template>
           </article>
